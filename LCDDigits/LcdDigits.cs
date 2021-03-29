@@ -11,6 +11,10 @@ namespace LCDDigits
                 return "._.\n" +
                        "|.|\n" +
                        "|_|\n";
+                case 1:
+                return "...\n" +
+                       "..|\n" +
+                       "..|\n";
                 default:
                 throw new NotImplementedException();
             }
