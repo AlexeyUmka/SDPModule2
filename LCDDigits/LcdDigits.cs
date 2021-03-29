@@ -1,23 +1,35 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
 
 namespace LCDDigits
 {
     public static class LcdDigits
     {
+        private static readonly string[,] DigitStringMap = {
+                {"._.",
+                 "|.|",
+                 "|_|" },
+                {"...",
+                 "..|",
+                 "..|" },
+            };
+        private const int MaxLineHeight = 3;
         public static string GetLcdStringNumber(this int number)
         {
-            switch(number){
-                case 0:
-                return "._.\n" +
-                       "|.|\n" +
-                       "|_|\n";
-                case 1:
-                return "...\n" +
-                       "..|\n" +
-                       "..|\n";
-                default:
-                throw new NotImplementedException();
+            var output = new StringBuilder();
+            var digits = number.ToString().Select(c => int.Parse($"{c}")).ToArray();
+
+            for (var lineHeight = 0; lineHeight < MaxLineHeight; lineHeight++)
+            {
+                foreach (var digit in digits)
+                {
+                    output.Append(DigitStringMap[digit, lineHeight]);
+                }
+                output.Append("\n");
             }
+
+            return output.ToString();
         }
     }
 }
