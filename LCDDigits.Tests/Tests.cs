@@ -35,5 +35,21 @@ namespace LCDDigits.Tests
             // Assert
             Assert.Equal(expectedResult, actualResult);
         }
+        
+        [Fact]
+        public void GetLcdStringNumber_GivenSeveralOnes_ReturnsSeveralOnesStringRepresentation()
+        {
+            // Arrange
+            const int number = 11;
+            const string expectedResult = "......\n"+
+                                          "..|..|\n"+ 
+                                          "..|..|\n";
+            
+            // Act
+            var actualResult = number.GetLcdStringNumber();
+            
+            // Assert
+            Assert.Equal(expectedResult, actualResult);
+        }
     }
 }
