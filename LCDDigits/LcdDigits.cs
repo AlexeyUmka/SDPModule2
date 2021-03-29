@@ -6,7 +6,14 @@ namespace LCDDigits
     {
         public static string GetLcdStringNumber(this int number)
         {
-            throw new NotImplementedException();
+            switch(number){
+                case 0:
+                return "._.\n" +
+                       "|.|\n" +
+                       "|_|\n";
+                default:
+                throw new NotImplementedException();
+            }
         }
     }
 }
