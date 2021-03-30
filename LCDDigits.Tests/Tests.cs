@@ -51,5 +51,21 @@ namespace LCDDigits.Tests
             // Assert
             Assert.Equal(expectedResult, actualResult);
         }
+        
+        [Fact]
+        public void GetLcdStringNumber_GivenAllExistingDigits_ReturnsValidStringRepresentation()
+        {
+            // Arrange
+            const int number = 1234567890;
+            const string expectedResult = "...._.._....._.._.._.._.._.._.\n"+
+                                          "..|._|._||_||_.|_...||_||_||.|\n"+
+                                          "..||_.._|..|._||_|..||_|..||_|\n";
+            
+            // Act
+            var actualResult = number.GetLcdStringNumber();
+            
+            // Assert
+            Assert.Equal(expectedResult, actualResult);
+        }
     }
 }
