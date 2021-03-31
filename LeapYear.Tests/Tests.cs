@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace LeapYear.Tests
@@ -59,6 +62,29 @@ namespace LeapYear.Tests
 
             // Assert
             Assert.Equal(expectedFlag, result);
+        }
+        
+        [Theory]
+        [ClassData(typeof(GetYearsRange))]
+        public void IsLeapYear_GivenRangeOfYears_ReturnsValueAsNativeMicrosoftFunction(IEnumerable<int> years)
+        {
+            foreach (var year in years) // Arrange
+            {
+                // Act
+                var isLeapYear = LeapYear.IsLeapYear(year);
+
+                // Assert
+                Assert.Equal(DateTime.IsLeapYear(year), isLeapYear);
+            }
+        }
+        
+        private class GetYearsRange : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[] {Enumerable.Range(1, 999)};
+            }
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();            
         }
     }
 }
