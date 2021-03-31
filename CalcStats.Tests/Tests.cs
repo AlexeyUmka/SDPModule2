@@ -9,11 +9,11 @@ namespace CalcStats.Tests
         public void GetStatistic_GivenOneNumber_ReturnsMinimumValue()
         {
             // Arrange
-            const int number = 1;
+            var numbers = new[] {1};
             const int expectedMinimum = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(number);
+            var result = CalcStatistic.GetStatistic(numbers);
 
             // Assert
             Assert.Equal(expectedMinimum, result);
@@ -23,11 +23,11 @@ namespace CalcStats.Tests
         public void GetStatistic_GivenOneNumber_ReturnsMaximumValue()
         {
             // Arrange
-            const int number = 1;
+            var numbers = new[] {1};
             const int expectedMaximum = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(number);
+            var result = CalcStatistic.GetStatistic(numbers);
 
             // Assert
             Assert.Equal(expectedMaximum, result);
@@ -37,11 +37,11 @@ namespace CalcStats.Tests
         public void GetStatistic_GivenOneNumber_ReturnsSequenceLengthValue()
         {
             // Arrange
-            const int number = 1;
+            var numbers = new[] {1};
             const int expectedLength = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(number);
+            var result = CalcStatistic.GetStatistic(numbers);
 
             // Assert
             Assert.Equal(expectedLength, result);
@@ -51,11 +51,11 @@ namespace CalcStats.Tests
         public void GetStatistic_GivenOneNumber_ReturnsAverageValue()
         {
             // Arrange
-            const int number = 1;
+            var numbers = new[] {1};
             const int expectedAverage = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(number);
+            var result = CalcStatistic.GetStatistic(numbers);
 
             // Assert
             Assert.Equal(expectedAverage, result);
