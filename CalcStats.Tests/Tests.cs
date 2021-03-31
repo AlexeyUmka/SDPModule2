@@ -102,5 +102,19 @@ namespace CalcStats.Tests
             // Assert
             Assert.Equal(expectedAverage, result);
         }
+        
+        [Fact]
+        public void GetStatistic_GivenSeveralNumbers_ReturnsSequenceLength()
+        {
+            // Arrange
+            var numbers = new[] {1, 2};
+            const double expectedAverage = 1.5;
+
+            // Act
+            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.SequenceLength);
+
+            // Assert
+            Assert.Equal(expectedAverage, result);
+        }
     }
 }
