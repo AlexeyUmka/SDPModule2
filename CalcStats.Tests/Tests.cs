@@ -46,5 +46,19 @@ namespace CalcStats.Tests
             // Assert
             Assert.Equal(expectedLength, result);
         }
+        
+        [Fact]
+        public void GetStatistic_GivenOneNumber_ReturnsAverageValue()
+        {
+            // Arrange
+            const int number = 1;
+            const int expectedAverage = 1;
+
+            // Act
+            var result = CalcStatistic.GetStatistic(number);
+
+            // Assert
+            Assert.Equal(expectedAverage, result);
+        }
     }
 }
