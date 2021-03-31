@@ -13,7 +13,7 @@ namespace CalcStats.Tests
             const int expectedMinimum = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers);
+            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Minimum);
 
             // Assert
             Assert.Equal(expectedMinimum, result);
@@ -27,7 +27,7 @@ namespace CalcStats.Tests
             const int expectedMaximum = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers);
+            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Maximum);
 
             // Assert
             Assert.Equal(expectedMaximum, result);
@@ -41,7 +41,7 @@ namespace CalcStats.Tests
             const int expectedLength = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers);
+            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.SequenceLength);
 
             // Assert
             Assert.Equal(expectedLength, result);
@@ -55,7 +55,7 @@ namespace CalcStats.Tests
             const int expectedAverage = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers);
+            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Average);
 
             // Assert
             Assert.Equal(expectedAverage, result);
@@ -65,11 +65,11 @@ namespace CalcStats.Tests
         public void GetStatistic_GivenSeveralNumbers_ReturnsMinimumValue()
         {
             // Arrange
-            var numbers = new[] {1, 2};
+            var numbers = new [] {1, 2};
             const double expectedMinimum = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers);
+            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Minimum);
 
             // Assert
             Assert.Equal(expectedMinimum, result);
@@ -83,7 +83,7 @@ namespace CalcStats.Tests
             const double expectedMaximum = 2;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers);
+            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Maximum);
 
             // Assert
             Assert.Equal(expectedMaximum, result);

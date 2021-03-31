@@ -6,9 +6,28 @@ namespace CalcStats
 {
     public static class CalcStatistic
     {
-        public static double GetStatistic(IEnumerable<int> numbers)
+        public enum StatisticType
         {
-            return numbers.Min();
+            Minimum,
+            Maximum,
+            Average,
+            SequenceLength,
+        }
+        public static double GetStatistic(IEnumerable<int> numbers, StatisticType statisticType)
+        {
+            switch (statisticType)
+            {
+                case StatisticType.Minimum:
+                    return numbers.Min();
+                case StatisticType.Average:
+                    return numbers.Max();
+                case StatisticType.Maximum:
+                    return numbers.Max();
+                case StatisticType.SequenceLength:
+                    return numbers.Count();
+                default:
+                    throw new NotSupportedException();
+            }
         }
     }
 }
