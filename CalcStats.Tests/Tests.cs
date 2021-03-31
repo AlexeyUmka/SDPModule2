@@ -74,5 +74,19 @@ namespace CalcStats.Tests
             // Assert
             Assert.Equal(expectedMinimum, result);
         }
+        
+        [Fact]
+        public void GetStatistic_GivenSeveralNumbers_ReturnsMaximumValue()
+        {
+            // Arrange
+            var numbers = new[] {1, 2};
+            const double expectedMaximum = 2;
+
+            // Act
+            var result = CalcStatistic.GetStatistic(numbers);
+
+            // Assert
+            Assert.Equal(expectedMaximum, result);
+        }
     }
 }
