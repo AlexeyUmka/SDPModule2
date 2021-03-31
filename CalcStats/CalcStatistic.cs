@@ -20,7 +20,7 @@ namespace CalcStats
                 case StatisticType.Minimum:
                     return numbers.Min();
                 case StatisticType.Average:
-                    return numbers.Max();
+                    return numbers.Average();
                 case StatisticType.Maximum:
                     return numbers.Max();
                 case StatisticType.SequenceLength:
