@@ -18,5 +18,19 @@ namespace LeapYear.Tests
             // Assert
             Assert.Equal(expectedFlag, result);
         }
+        
+        [Fact]
+        public void IsLeapYear_GivenNotLeapYear_ReturnsFalse()
+        {
+            // Arrange :D
+            const int givenYear = 1985;
+            const bool expectedFlag = false;
+
+            // Act
+            var result = LeapYear.IsLeapYear(givenYear);
+
+            // Assert
+            Assert.Equal(expectedFlag, result);
+        }
     }
 }
