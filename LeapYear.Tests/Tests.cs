@@ -46,5 +46,19 @@ namespace LeapYear.Tests
             // Assert
             Assert.Equal(expectedFlag, result);
         }
+        
+        [Fact]
+        public void IsLeapYear_GivenHundredDivisibleFourHundredDivisibleYear_ReturnsTrue()
+        {
+            // Arrange :D
+            const int givenYear = 1600;
+            const bool expectedFlag = true;
+
+            // Act
+            var result = LeapYear.IsLeapYear(givenYear);
+
+            // Assert
+            Assert.Equal(expectedFlag, result);
+        }
     }
 }
