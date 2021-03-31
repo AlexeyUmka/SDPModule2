@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace CalcStats.Tests
@@ -13,7 +16,7 @@ namespace CalcStats.Tests
             const int expectedMinimum = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Minimum);
+            var result = CalcStatistic.GetStatistic(numbers, PredefinedStatisticModels.MinStatisticModel);
 
             // Assert
             Assert.Equal(expectedMinimum, result);
@@ -27,7 +30,7 @@ namespace CalcStats.Tests
             const int expectedMaximum = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Maximum);
+            var result = CalcStatistic.GetStatistic(numbers, PredefinedStatisticModels.MaxStatisticModel);
 
             // Assert
             Assert.Equal(expectedMaximum, result);
@@ -41,7 +44,7 @@ namespace CalcStats.Tests
             const int expectedLength = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.SequenceLength);
+            var result = CalcStatistic.GetStatistic(numbers,PredefinedStatisticModels.LengthStatisticModel);
 
             // Assert
             Assert.Equal(expectedLength, result);
@@ -55,7 +58,7 @@ namespace CalcStats.Tests
             const int expectedAverage = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Average);
+            var result = CalcStatistic.GetStatistic(numbers, PredefinedStatisticModels.AvgStatisticModel);
 
             // Assert
             Assert.Equal(expectedAverage, result);
@@ -69,7 +72,7 @@ namespace CalcStats.Tests
             const double expectedMinimum = 1;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Minimum);
+            var result = CalcStatistic.GetStatistic(numbers, PredefinedStatisticModels.MinStatisticModel);
 
             // Assert
             Assert.Equal(expectedMinimum, result);
@@ -83,7 +86,7 @@ namespace CalcStats.Tests
             const double expectedMaximum = 2;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Maximum);
+            var result = CalcStatistic.GetStatistic(numbers, PredefinedStatisticModels.MaxStatisticModel);
 
             // Assert
             Assert.Equal(expectedMaximum, result);
@@ -97,7 +100,7 @@ namespace CalcStats.Tests
             const double expectedAverage = 1.5;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Average);
+            var result = CalcStatistic.GetStatistic(numbers, PredefinedStatisticModels.AvgStatisticModel);
 
             // Assert
             Assert.Equal(expectedAverage, result);
@@ -111,7 +114,7 @@ namespace CalcStats.Tests
             const double expectedAverage = 1.5;
 
             // Act
-            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.SequenceLength);
+            var result = CalcStatistic.GetStatistic(numbers, PredefinedStatisticModels.LengthStatisticModel);
 
             // Assert
             Assert.Equal(expectedAverage, result);
