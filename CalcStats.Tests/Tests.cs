@@ -32,5 +32,19 @@ namespace CalcStats.Tests
             // Assert
             Assert.Equal(expectedMaximum, result);
         }
+        
+        [Fact]
+        public void GetStatistic_GivenOneNumber_ReturnsSequenceLengthValue()
+        {
+            // Arrange
+            const int number = 1;
+            const int expectedLength = 1;
+
+            // Act
+            var result = CalcStatistic.GetStatistic(number);
+
+            // Assert
+            Assert.Equal(expectedLength, result);
+        }
     }
 }
