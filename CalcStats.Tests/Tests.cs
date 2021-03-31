@@ -88,5 +88,19 @@ namespace CalcStats.Tests
             // Assert
             Assert.Equal(expectedMaximum, result);
         }
+        
+        [Fact]
+        public void GetStatistic_GivenSeveralNumbers_ReturnsAverageValue()
+        {
+            // Arrange
+            var numbers = new[] {1, 2};
+            const double expectedAverage = 1.5;
+
+            // Act
+            var result = CalcStatistic.GetStatistic(numbers, CalcStatistic.StatisticType.Average);
+
+            // Assert
+            Assert.Equal(expectedAverage, result);
+        }
     }
 }
