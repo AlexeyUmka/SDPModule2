@@ -60,5 +60,19 @@ namespace CalcStats.Tests
             // Assert
             Assert.Equal(expectedAverage, result);
         }
+        
+        [Fact]
+        public void GetStatistic_GivenSeveralNumbers_ReturnsMinimumValue()
+        {
+            // Arrange
+            var numbers = new[] {1, 2};
+            const double expectedMinimum = 1;
+
+            // Act
+            var result = CalcStatistic.GetStatistic(numbers);
+
+            // Assert
+            Assert.Equal(expectedMinimum, result);
+        }
     }
 }
