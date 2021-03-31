@@ -6,7 +6,7 @@ namespace CalcStats
     {
         public static double GetStatistic(int number)
         {
-            throw new NotImplementedException();
+            return number;
         }
     }
 }
