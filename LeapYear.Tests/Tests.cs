@@ -63,26 +63,26 @@ namespace LeapYear.Tests
             // Assert
             Assert.Equal(expectedFlag, result);
         }
-        
+
         [Theory]
         [ClassData(typeof(GetYearsRange))]
-        public void IsLeapYear_GivenRangeOfYears_ReturnsValueAsNativeMicrosoftFunction(IEnumerable<int> years)
+        public void IsLeapYear_GivenRangeOfYears_ReturnsValueAsNativeMicrosoftFunction(int year)
         {
-            foreach (var year in years) // Arrange
-            {
-                // Act
-                var isLeapYear = LeapYear.IsLeapYear(year);
+            // Act
+            var isLeapYear = LeapYear.IsLeapYear(year);
 
-                // Assert
-                Assert.Equal(DateTime.IsLeapYear(year), isLeapYear);
-            }
+            // Assert
+            Assert.Equal(DateTime.IsLeapYear(year), isLeapYear);
         }
         
         private class GetYearsRange : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
             {
-                yield return new object[] {Enumerable.Range(1, 999)};
+                for (int i = 1; i < 9999; i++)
+                {
+                    yield return new object[]{i};
+                }
             }
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();            
         }
