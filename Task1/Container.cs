@@ -54,11 +54,16 @@ namespace Task1
         public T Get<T>()
         {
             var implementationType =
-                _typeImplementationDependencies.LastOrDefault(serviceDescriptor => serviceDescriptor.Key == typeof(T) || serviceDescriptor.Value == typeof(T));
+                _typeImplementationDependencies.LastOrDefault(serviceDescriptor => serviceDescriptor.Key == typeof(T) || serviceDescriptor.Value == typeof(T)).Value;
+
+            if (implementationType == null)
+            {
+                throw new Exception($"The implementation for the {typeof(T)} wasn't found");
+            }
             
-            var constructorParameters = implementationType.Value.GetConstructors()[0].GetParameters();
+            var constructorParameters = implementationType.GetConstructors()[0].GetParameters();
             
-            var importedProperties = implementationType.Value.GetProperties()
+            var importedProperties = implementationType.GetProperties()
                 .Where(prop => prop.GetCustomAttribute<ImportAttribute>() != null).ToList();
             
             if (constructorParameters.Length > 0)
@@ -71,14 +76,14 @@ namespace Task1
                 return GetImplementationForTypeWithImportedProperties<T>(implementationType, importedProperties);
             }
 
-            return (T) Activator.CreateInstance(implementationType.Value);
+            return (T) Activator.CreateInstance(implementationType);
         }
 
-        private T GetImplementationForTypeWithImportedProperties<T>(KeyValuePair<Type, Type> implementationType, IEnumerable<PropertyInfo> propertyInfos)
+        private T GetImplementationForTypeWithImportedProperties<T>(Type implementationType, IEnumerable<PropertyInfo> propertyInfos)
         {
-            var implementation = Activator.CreateInstance(implementationType.Value);
+            var implementation = Activator.CreateInstance(implementationType);
             
-            foreach (var property in implementationType.Value.GetProperties().Where(prop => prop.GetCustomAttribute<ImportAttribute>() != null))
+            foreach (var property in implementationType.GetProperties().Where(prop => prop.GetCustomAttribute<ImportAttribute>() != null))
             {
                 var parameterType = property.PropertyType;
                 
@@ -96,27 +101,27 @@ namespace Task1
             return (T) implementation;
         }
 
-        private T GetImplementationForTypeWithConstructor<T>(KeyValuePair<Type, Type> implementationType, ParameterInfo[] constructorParameters)
+        private T GetImplementationForTypeWithConstructor<T>(Type implementationType, ParameterInfo[] constructorParameters)
         {
-            var exportAttribute = implementationType.Value.GetCustomAttribute<ExportAttribute>();
+            var exportAttribute = implementationType.GetCustomAttribute<ExportAttribute>();
             
             var importConstructorAttribute =
-                implementationType.Key.GetCustomAttribute<ImportConstructorAttribute>();
+                implementationType.GetCustomAttribute<ImportConstructorAttribute>();
             
             if (exportAttribute != null)
             {
                 _typeImplementationDependencies.Add(
-                    exportAttribute.Contract == null ? implementationType.Value : exportAttribute.Contract,
-                    implementationType.Value);
+                    exportAttribute.Contract == null ? implementationType : exportAttribute.Contract,
+                    implementationType);
                 
                 var method = typeof(Container).GetMethod(nameof(Get));
                 
-                var generic = method.MakeGenericMethod(implementationType.Key);
+                var generic = method.MakeGenericMethod(implementationType);
                 
                 return (T) generic.Invoke(this, null);
             }
 
-            if (importConstructorAttribute == null) return (T) Activator.CreateInstance(implementationType.Value);
+            if (importConstructorAttribute == null) return (T) Activator.CreateInstance(implementationType);
             {
                 var parameters = new List<object>();
                 
@@ -135,7 +140,7 @@ namespace Task1
                     parameters.Add(implementationParameter);
                 }
 
-                return (T) Activator.CreateInstance(implementationType.Value, parameters.ToArray());
+                return (T) Activator.CreateInstance(implementationType, parameters.ToArray());
             }
         }
     }
