@@ -9,7 +9,7 @@ namespace Task1
 {
     public class Container
     {
-        private Dictionary<Type, Type> _serviceDescriptors = new Dictionary<Type, Type>();
+        private readonly Dictionary<Type, Type> _typeImplementationDependencies = new Dictionary<Type, Type>();
 
         public void AddAssembly(Assembly assembly)
         {
@@ -20,40 +20,40 @@ namespace Task1
                 var importProperties = type.GetProperties().Where(prop => prop.GetCustomAttribute<ImportAttribute>() != null);
                 if (type.GetCustomAttribute<ImportConstructorAttribute>()!=null)
                 {
-                    _serviceDescriptors.Add(type, type);
+                    _typeImplementationDependencies.Add(type, type);
                 }
                 else if (exportAttribute != null)
                 {
                     if (exportAttribute.Contract == null)
                     {
-                        _serviceDescriptors.Add(type, type);
+                        _typeImplementationDependencies.Add(type, type);
                     }
                     else
                     {
-                        _serviceDescriptors.Add(exportAttribute.Contract, type);
+                        _typeImplementationDependencies.Add(exportAttribute.Contract, type);
                     }
                 }
                 else if(importProperties.Any())
                 {
-                    _serviceDescriptors.Add(type, type);
+                    _typeImplementationDependencies.Add(type, type);
                 }
             }
         }
 
         public void AddType(Type type)
         {
-            _serviceDescriptors.Add(type, type);
+            _typeImplementationDependencies.Add(type, type);
         }
 
         public void AddType(Type type, Type baseType)
         {
-            _serviceDescriptors.Add(baseType, type);
+            _typeImplementationDependencies.Add(baseType, type);
         }
 
         public T Get<T>()
         {
             var implementationType =
-                _serviceDescriptors.LastOrDefault(serviceDescriptor => serviceDescriptor.Key == typeof(T) || serviceDescriptor.Value == typeof(T));
+                _typeImplementationDependencies.LastOrDefault(serviceDescriptor => serviceDescriptor.Key == typeof(T) || serviceDescriptor.Value == typeof(T));
             var constructorParameters = implementationType.Value.GetConstructors()[0].GetParameters();
             if (constructorParameters.Length > 0)
             {
@@ -64,11 +64,11 @@ namespace Task1
                 {
                     if (exportAttribute.Contract == null)
                     {
-                        _serviceDescriptors.Add(implementationType.Value, implementationType.Value);
+                        _typeImplementationDependencies.Add(implementationType.Value, implementationType.Value);
                     }
                     else
                     {
-                        _serviceDescriptors.Add(exportAttribute.Contract, implementationType.Value);
+                        _typeImplementationDependencies.Add(exportAttribute.Contract, implementationType.Value);
                     }
 
                     var method = typeof(Container).GetMethod(nameof(Get));
