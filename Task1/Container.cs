@@ -103,23 +103,8 @@ namespace Task1
 
         private T GetImplementationForTypeWithConstructor<T>(Type implementationType, ParameterInfo[] constructorParameters)
         {
-            var exportAttribute = implementationType.GetCustomAttribute<ExportAttribute>();
-            
             var importConstructorAttribute =
                 implementationType.GetCustomAttribute<ImportConstructorAttribute>();
-            
-            if (exportAttribute != null)
-            {
-                _typeImplementationDependencies.Add(
-                    exportAttribute.Contract == null ? implementationType : exportAttribute.Contract,
-                    implementationType);
-                
-                var method = typeof(Container).GetMethod(nameof(Get));
-                
-                var generic = method.MakeGenericMethod(implementationType);
-                
-                return (T) generic.Invoke(this, null);
-            }
 
             if (importConstructorAttribute == null) return (T) Activator.CreateInstance(implementationType);
             {
