@@ -18,22 +18,18 @@ namespace Task1
             foreach (var type in types)
             {
                 var exportAttribute = type.GetCustomAttribute<ExportAttribute>();
-                
                 var importAttribute = type.GetCustomAttribute<ImportConstructorAttribute>();
-                
                 var importProperties = type.GetProperties().Where(prop => prop.GetCustomAttribute<ImportAttribute>() != null);
                 
                 if (importAttribute != null)
                 {
                     _typeImplementationDependencies.Add(type, type);
                 }
-                
                 else if (exportAttribute != null)
                 {
                     _typeImplementationDependencies.Add(
                         exportAttribute.Contract == null ? type : exportAttribute.Contract, type);
                 }
-                
                 else if(importProperties.Any())
                 {
                     _typeImplementationDependencies.Add(type, type);
@@ -62,7 +58,6 @@ namespace Task1
             }
             
             var constructorParameters = implementationType.GetConstructors()[0].GetParameters();
-            
             var importedProperties = implementationType.GetProperties()
                 .Where(prop => prop.GetCustomAttribute<ImportAttribute>() != null).ToList();
             
@@ -86,14 +81,9 @@ namespace Task1
             foreach (var property in implementationType.GetProperties().Where(prop => prop.GetCustomAttribute<ImportAttribute>() != null))
             {
                 var parameterType = property.PropertyType;
-                
                 var method = typeof(Container).GetMethod(nameof(Get));
-                
                 var generic = method.MakeGenericMethod(parameterType);
-                
-                object propertyImplementation = null;
-                
-                propertyImplementation = generic.Invoke(this, null);
+                var propertyImplementation = generic.Invoke(this, null);
                 
                 property.SetValue(implementation, propertyImplementation);
             }
@@ -112,16 +102,10 @@ namespace Task1
                 
                 foreach (var parameter in constructorParameters)
                 {
-                    object implementationParameter = null;
-                    
                     var parameterType = parameter.ParameterType;
-                    
                     var method = typeof(Container).GetMethod(nameof(Get));
-                    
                     var generic = method.MakeGenericMethod(parameterType);
-                    
-                    implementationParameter = generic.Invoke(this, null);
-                    
+                    var implementationParameter = generic.Invoke(this, null);
                     parameters.Add(implementationParameter);
                 }
 
