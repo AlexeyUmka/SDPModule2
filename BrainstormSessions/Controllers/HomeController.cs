@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
+using BrainstormSessions.Helpers;
 using BrainstormSessions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace BrainstormSessions.Controllers
     public class HomeController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(HomeController));
 
         public HomeController(IBrainstormSessionRepository sessionRepository)
         {
@@ -20,6 +22,9 @@ namespace BrainstormSessions.Controllers
 
         public async Task<IActionResult> Index()
         {
+            Logger.Info($"{nameof(Index)} started processing request");
+            Logger.Info($"{new StormSessionViewModel()}");
+            
             var sessionList = await _sessionRepository.ListAsync();
 
             var model = sessionList.Select(session => new StormSessionViewModel()
@@ -30,6 +35,8 @@ namespace BrainstormSessions.Controllers
                 IdeaCount = session.Ideas.Count
             });
 
+            Logger.Info($"{nameof(Index)} finished processing request");
+            
             return View(model);
         }
 
@@ -37,6 +44,11 @@ namespace BrainstormSessions.Controllers
         {
             [Required]
             public string SessionName { get; set; }
+
+            public override string ToString()
+            {
+                return this.GetPropertiesAndFieldsStringRepresentation();
+            }
         }
 
         [HttpPost]
@@ -44,6 +56,7 @@ namespace BrainstormSessions.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Logger.Warn($"Passed model is not valid: {model}");
                 return BadRequest(ModelState);
             }
             else

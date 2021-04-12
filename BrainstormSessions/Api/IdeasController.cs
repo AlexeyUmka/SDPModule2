@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using BrainstormSessions.ClientModels;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
+using BrainstormSessions.Helpers;
+using log4net.Repository.Hierarchy;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrainstormSessions.Api
@@ -12,6 +14,7 @@ namespace BrainstormSessions.Api
     public class IdeasController : ControllerBase
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(IdeasController));
 
         public IdeasController(IBrainstormSessionRepository sessionRepository)
         {
@@ -44,12 +47,14 @@ namespace BrainstormSessions.Api
         {
             if (!ModelState.IsValid)
             {
+                Logger.Error($"Passed model is not valid: {model}");
                 return BadRequest(ModelState);
             }
 
             var session = await _sessionRepository.GetByIdAsync(model.SessionId);
             if (session == null)
             {
+                Logger.Warn($"Session with id: {model.SessionId} is not found");
                 return NotFound(model.SessionId);
             }
 
@@ -77,6 +82,7 @@ namespace BrainstormSessions.Api
 
             if (session == null)
             {
+                Logger.Warn($"Session with id: {sessionId} is not found");
                 return NotFound(sessionId);
             }
 
@@ -101,6 +107,7 @@ namespace BrainstormSessions.Api
         {
             if (!ModelState.IsValid)
             {
+                Logger.Error($"Passed model is not valid: {model}");
                 return BadRequest(ModelState);
             }
 

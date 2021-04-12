@@ -8,6 +8,7 @@ namespace BrainstormSessions.Controllers
     public class SessionController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(SessionController));
 
         public SessionController(IBrainstormSessionRepository sessionRepository)
         {
@@ -16,8 +17,11 @@ namespace BrainstormSessions.Controllers
 
         public async Task<IActionResult> Index(int? id)
         {
+            Logger.Debug($"{nameof(Index)} started processing request");
+            
             if (!id.HasValue)
             {
+                Logger.Debug("Id is not passed, redirecting to the Home/Index");
                 return RedirectToAction(actionName: nameof(Index),
                     controllerName: "Home");
             }
@@ -25,6 +29,7 @@ namespace BrainstormSessions.Controllers
             var session = await _sessionRepository.GetByIdAsync(id.Value);
             if (session == null)
             {
+                Logger.Debug($"Session with id {id} wasn't found");
                 return Content("Session not found.");
             }
 
@@ -34,7 +39,9 @@ namespace BrainstormSessions.Controllers
                 Name = session.Name,
                 Id = session.Id
             };
-
+            
+            Logger.Debug($"{nameof(Index)} finished processing request");
+            
             return View(viewModel);
         }
     }

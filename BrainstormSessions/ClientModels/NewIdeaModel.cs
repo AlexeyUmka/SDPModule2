@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BrainstormSessions.Helpers;
 
 namespace BrainstormSessions.ClientModels
 {
@@ -12,5 +13,10 @@ namespace BrainstormSessions.ClientModels
 
         [Range(1, 1000000)]
         public int SessionId { get; set; }
+
+        public override string ToString()
+        {
+            return this.GetPropertiesAndFieldsStringRepresentation();
+        }
     }
 }
