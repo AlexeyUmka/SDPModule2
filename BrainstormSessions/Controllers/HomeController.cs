@@ -23,8 +23,7 @@ namespace BrainstormSessions.Controllers
         public async Task<IActionResult> Index()
         {
             Logger.Info($"{nameof(Index)} started processing request");
-            Logger.Info($"{new StormSessionViewModel()}");
-            
+
             var sessionList = await _sessionRepository.ListAsync();
 
             var model = sessionList.Select(session => new StormSessionViewModel()
