@@ -6,6 +6,7 @@ using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using BrainstormSessions.Helpers;
 using BrainstormSessions.ViewModels;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrainstormSessions.Controllers
@@ -13,7 +14,7 @@ namespace BrainstormSessions.Controllers
     public class HomeController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
-        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(HomeController));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(HomeController));
 
         public HomeController(IBrainstormSessionRepository sessionRepository)
         {

@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using BrainstormSessions.ClientModels;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
-using BrainstormSessions.Helpers;
-using log4net.Repository.Hierarchy;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrainstormSessions.Api
 {
+    [Route("api/{controller}")]
     public class IdeasController : ControllerBase
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
-        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(IdeasController));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(IdeasController));
 
         public IdeasController(IBrainstormSessionRepository sessionRepository)
         {
